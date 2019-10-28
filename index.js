@@ -40,6 +40,16 @@ server.get("/users", (req, res) => {
     });
 });
 
+server.get("/users/:id", (req, res) =>{
+    db.findById(req.params.id)
+    .then(user =>{
+        user ? res.status(200).json(user) : res.status(404).json({ message: "The user with the specified ID does not exist." })
+    })
+    .catch(() =>{
+        res.status(500).json({ error: "The user information could not be retrieved." })
+    })
+})
+
 /*listener*/
 const port = 5000;
 server.listen(port, () => console.log("test API running on port 5000"));
